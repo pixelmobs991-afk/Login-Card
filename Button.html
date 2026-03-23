@@ -1,178 +1,48 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creepy Button</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        * {
-            border: 0;
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --hue: 223deg;
-            --gray1: hsl(var(--hue) 10% 95%);
-            --gray9: hsl(var(--hue) 10% 15%);
-            --black: hsl(0 0% 0%);
-            --primary3: hsl(var(--hue) 90% 75%);
-            --primary5: hsl(var(--hue) 90% 55%);
-            --primary6: hsl(var(--hue) 90% 45%);
-            --trans-dur: 0.3s;
-            font-size: clamp(1.25rem, 1rem + 1.25vw, 2.5rem);
-        }
-
-        body {
-            background-color: var(--gray9);
-            display: grid;
-            place-items: center;
-            height: 100vh;
-            font-family: 'Courier New', monospace;
-        }
+        /* ... CSS form/login-card-mu di sini ... */
 
         .creepy-btn {
-            background-color: var(--black);
-            border-radius: 1.25em;
-            color: var(--gray1);
-            cursor: pointer;
-            letter-spacing: 1px;
-            min-width: 9em;
-            outline: 0.1875em solid transparent;
-            transition: outline 0.1s linear;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-        }
-
-        .creepy-btn,
-        .creepy-btn__cover,
-        .creepy-btn__eye {
-            position: relative;
-        }
-
-        .creepy-btn,
-        .creepy-btn__pupil {
-            background-color: var(--black);
-        }
-
-        .creepy-btn__cover {
-            background-color: var(--primary5);
-            border-radius: inherit;
-            box-shadow: 0 0 0 0.125em var(--black) inset;
-            padding: 0.5em 1em;
             display: block;
-            transition: background-color var(--trans-dur), transform var(--trans-dur) cubic-bezier(0.65, 0, 0.35, 1);
-            transform-origin: 1.25em 50%;
+            background: linear-gradient(45deg, #ffcc00, #ff8c00);
+            border: 2px solid #FFD700;
+            border-radius: 1.25rem;
+            color: #333;
+            padding: 0.9em 1.5em;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255,215,0,0.3);
+            transition: 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        .creepy-btn__eyes {
-            display: flex;
-            align-items: center;
-            gap: 0.375em;
-            position: absolute;
-            right: 1em;
-            bottom: 0.5em;
-            height: 0.75em;
+        .creepy-btn:hover {
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.5);
+            transform: translateY(-2px);
         }
 
-        .creepy-btn__eye {
-            animation: eye-blink 3s infinite;
-            background-color: var(--gray1);
-            border-radius: 50%;
-            overflow: hidden;
-            width: 0.75em;
-            height: 0.75em;
-            position: relative;
-        }
-
-        .creepy-btn__pupil {
-            aspect-ratio: 1;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0.375em;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .creepy-btn:hover .creepy-btn__cover {
-            background-color: var(--primary6);
-            transform: rotate(-12deg);
-        }
-
-        .creepy-btn:active .creepy-btn__cover {
-            transform: rotate(0);
-        }
-
-        @keyframes eye-blink {
-            0%, 92%, 100% {
-                animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
-                height: 0.75em;
-            }
-            96% {
-                animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
-                height: 0;
-            }
+        .creepy-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 18px rgba(255,215,0,0.4);
         }
     </style>
 </head>
 <body>
-    <button class="creepy-btn" id="creepyBtn">
-        <span class="creepy-btn__eyes" id="eyes">
-            <span class="creepy-btn__eye">
-                <span class="creepy-btn__pupil" id="pupilLeft"></span>
-            </span>
-            <span class="creepy-btn__eye">
-                <span class="creepy-btn__pupil" id="pupilRight"></span>
-            </span>
-        </span>
-        <span class="creepy-btn__cover">CLICK ME</span>
-    </button>
-
-    <script>
-        const btn = document.getElementById('creepyBtn');
-        const eyesContainer = document.getElementById('eyes');
-        const leftPupil = document.getElementById('pupilLeft');
-        const rightPupil = document.getElementById('pupilRight');
-
-        function updateEyes(e) {
-            const rect = eyesContainer.getBoundingClientRect();
-            const eyesCenterX = rect.left + rect.width / 2;
-            const eyesCenterY = rect.top + rect.height / 2;
-            
-            let clientX, clientY;
-            if (e.touches) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-            
-            const dx = clientX - eyesCenterX;
-            const dy = clientY - eyesCenterY;
-            const angle = Math.atan2(-dy, dx) + Math.PI / 2;
-            const distance = Math.hypot(dx, dy);
-            const visionRangeX = 180;
-            const visionRangeY = 75;
-            const x = Math.sin(angle) * distance / visionRangeX;
-            const y = Math.cos(angle) * distance / visionRangeY;
-            
-            const translateX = `${-50 + x * 50}%`;
-            const translateY = `${-50 + y * 50}%`;
-            const transform = `translate(${translateX}, ${translateY})`;
-            
-            leftPupil.style.transform = transform;
-            rightPupil.style.transform = transform;
-        }
-
-        btn.addEventListener('mousemove', updateEyes);
-        btn.addEventListener('touchmove', updateEyes);
-        btn.addEventListener('mouseleave', () => {
-            leftPupil.style.transform = 'translate(-50%, -50%)';
-            rightPupil.style.transform = 'translate(-50%, -50%)';
-        });
-    </script>
+    <!-- Form login-card-mu -->
+    <form action="#" class="login-form">
+        <!-- ... input username & password ... -->
+        <button type="submit" class="creepy-btn">Login</button>
+        <p class="register">...</p>
+    </form>
 </body>
 </html>
